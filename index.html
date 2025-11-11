@@ -690,7 +690,6 @@
                 return;
             }
 
-            // Измеряем ширину всех текстовых блоков
             const blockWidths = textBlocks.map(block =>
                 measureTextWidth(block.text, block.fontSize, block.fontFamily)
             );
@@ -698,15 +697,9 @@
             const totalTextWidth = blockWidths.reduce((sum, width) => sum + width, 0);
             const n = textBlocks.length;
 
-            // ПРАВИЛЬНАЯ ФОРМУЛА для стыковки панелей:
-            // У нас n блоков текста, значит n промежутков между ними (включая стыки панелей)
-            // spacing = (sectionLength - totalTextWidth) / n
-            // Первый блок начинается на расстоянии spacing/2 от начала
-
             const spacing = (sectionLength - totalTextWidth) / n;
             const startOffset = spacing / 2;
 
-            // Располагаем блоки
             let currentX = startOffset;
             const positionedBlocks = textBlocks.map((block, index) => {
                 const x = currentX;
@@ -726,7 +719,7 @@
             let svgContent = `<rect width="${width}" height="${height}" fill="${bgColor}"/>`;
 
             blocks.forEach(block => {
-                // Центр по вертикали + offset от центра
+                // ВАЖНО: одинаковая формула для Y в превью и экспорте
                 const y = (height / 2) + block.verticalOffset;
                 svgContent += `
                     <text 
@@ -754,19 +747,19 @@
         }
 
         function textToPath(font, text, fontSize, x, y) {
-            // dominant-baseline="central" центрирует по cap-height (высоте заглавных букв)
-            // а не по фактическим boundaries с выносными элементами
+            // y уже содержит: (height / 2) + verticalOffset
+            // Теперь конвертируем в baseline для opentype
 
             const scale = fontSize / font.unitsPerEm;
 
-            // Используем capHeight - это высота заглавных букв
-            // Если capHeight нет в шрифте, используем ascender как приближение
+            // Используем capHeight - высота заглавных букв
             const capHeight = (font.tables.os2 && font.tables.os2.sCapHeight)
                 ? font.tables.os2.sCapHeight * scale
-                : font.ascender * scale * 0.7; // приблизительное значение
+                : font.ascender * scale * 0.7;
 
-            // Центр cap-height должен быть на y
-            // baseline находится внизу, поэтому:
+            // dominant-baseline="central" центрирует по cap-height
+            // y указывает где должен быть центр cap-height
+            // baseline для opentype находится внизу, поэтому смещаем вниз на половину cap-height
             const baselineY = y + (capHeight / 2);
 
             const path = font.getPath(text, x, baselineY, fontSize);
@@ -801,15 +794,14 @@
 `;
 
             for (const block of positionedBlocks) {
+                // ВАЖНО: точно такая же формула для Y как в превью
                 const y = (height / 2) + block.verticalOffset;
                 const font = loadedFonts[block.id];
 
                 if (font) {
-                    // Конвертируем текст в кривые
                     const pathData = textToPath(font, block.text, block.fontSize, block.x, y);
                     svgContent += `    <path d="${pathData}" fill="${block.color}"/>\n`;
                 } else {
-                    // Используем стандартный шрифт как текст
                     svgContent += `    <text x="${block.x}" y="${y}" font-family="${block.fontFamily}" font-size="${block.fontSize}" fill="${block.color}" text-anchor="start" dominant-baseline="central">${escapeXml(block.text)}</text>\n`;
                 }
             }
