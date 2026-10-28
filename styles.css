@@ -1,0 +1,5 @@
+/* AIR: общие токены, сцена, инспектор и адаптивность. */
+@import url("./styles/base.css");
+@import url("./styles/workspace.css");
+@import url("./styles/inspector.css");
+@import url("./styles/responsive.css");

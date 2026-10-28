@@ -1,0 +1,319 @@
+@keyframes toast-in {
+  from {
+    opacity:0;
+    translate:0 8px
+  }
+  to {
+    opacity:1;
+    translate:0 0
+  }
+}
+@keyframes dialog-in {
+  from {
+    opacity:0;
+    transform:translateY(8px) scale(.985)
+  }
+  to {
+    opacity:1;
+    transform:translateY(0) scale(1)
+  }
+}
+@media(min-width:1700px) {
+  .editor-grid {
+    grid-template-columns:minmax(0,1fr) 320px;
+    gap:32px;
+    margin:32px 40px 24px;
+    height:calc(100dvh - 136px)
+  }
+  .app-header {
+    padding:0 40px
+  }
+  .scene-canvas {
+    padding-left:40px;
+    padding-right:40px
+  }
+  .workspace-toolbar {
+    padding-left:28px;
+    padding-right:28px
+  }
+}
+@media(max-width:1150px) {
+  .app-header {
+    gap:18px;
+    padding:0 20px
+  }
+  .identity {
+    gap:14px
+  }
+  .app-name {
+    font-size:9px
+  }
+  .header-actions #saveState {
+    max-width:100px;
+    overflow:hidden;
+    text-overflow:ellipsis;
+    margin-right:4px
+  }
+  .editor-grid {
+    margin:20px;
+    gap:20px;
+    grid-template-columns:minmax(0,1fr) 280px;
+    height:calc(100dvh - 120px)
+  }
+  .inspector {
+    padding:15px 18px 0
+  }
+  .project-title-label {
+    min-width:70px
+  }
+  .workspace-toolbar {
+    padding:12px;
+    gap:6px
+  }
+  .workspace-tools {
+    gap:2px
+  }
+  .workspace-layerbar {
+    padding:0 14px
+  }
+  .view-tabs button,.zoom-control button {
+    padding:6px 7px
+  }
+  .workspace .icon-button {
+    min-width:25px;
+    padding:4px 5px
+  }
+  .quiet {
+    padding:8px;
+    font-size:11px
+  }
+  .layout-notice {
+    margin:0 14px
+  }
+  .workspace-footer {
+    padding:0 14px
+  }
+}
+@media(max-width:850px) {
+  .app-header {
+    height:auto;
+    min-height:72px;
+    flex-wrap:wrap;
+    padding:16px 18px;
+    gap:12px
+  }
+  .identity {
+    margin-right:auto
+  }
+  .project-title-label {
+    flex:1;
+    max-width:240px
+  }
+  .header-actions {
+    width:100%;
+    justify-content:flex-end
+  }
+  .header-actions #saveState {
+    margin-right:auto;
+    max-width:none
+  }
+  .editor-grid {
+    display:flex;
+    flex-direction:column;
+    margin:16px;
+    height:auto;
+    min-height:0;
+    gap:18px
+  }
+  .workspace {
+    width:100%;
+    height:560px;
+    grid-template-rows:54px 50px minmax(200px,1fr) 48px 30px;
+    position:relative
+  }
+  .inspector {
+    width:100%;
+    max-height:none;
+    padding:16px 22px 0
+  }
+  .inspector-tabs {
+    position:sticky;
+    top:0;
+    background:var(--paper);
+    z-index:2
+  }
+  .inspector h1 {
+    font-size:20px
+  }
+  .inspector #inspectorSubtitle {
+    margin-bottom:18px
+  }
+  .inspector .field-row {
+    grid-template-columns:1fr 1fr
+  }
+  .inspector .field {
+    margin-bottom:15px
+  }
+  .inspector-foot {
+    padding:15px 0
+  }
+  .workspace-footer {
+    font-size:8px
+  }
+  .scene-canvas {
+    padding:36px 22px 48px
+  }
+  .canvas-corner {
+    font-size:8px
+  }
+  .layout-notice #spaceMetric {
+    display:none
+  }
+}
+@media(max-width:480px) {
+  .identity img {
+    width:95px
+  }
+  .identity-divider {
+    display:none
+  }
+  .app-name {
+    font-size:9px;
+    letter-spacing:1.5px
+  }
+  .project-title-label {
+    max-width:135px;
+    min-width:80px
+  }
+  .project-title-label input {
+    font-size:10px;
+    padding:5px
+  }
+  .header-actions {
+    gap:3px
+  }
+  .header-actions #saveState {
+    font-size:9px
+  }
+  .header-actions .quiet {
+    font-size:10px;
+    padding:7px 5px
+  }
+  .primary {
+    padding:9px 11px;
+    font-size:10px
+  }
+  .primary span {
+    margin-left:5px
+  }
+  .editor-grid {
+    margin:12px;
+    gap:14px
+  }
+  .workspace {
+    border-radius:12px;
+    height:530px;
+    grid-template-rows:90px 46px minmax(160px,1fr) 48px 28px
+  }
+  .workspace-toolbar {
+    flex-wrap:wrap;
+    justify-content:space-between;
+    padding:10px 12px;
+    align-content:center;
+    gap:7px
+  }
+  .workspace-tools {
+    width:100%;
+    justify-content:space-between
+  }
+  .workspace-tools .zoom-control {
+    margin-left:auto
+  }
+  .view-tabs {
+    padding:2px
+  }
+  .workspace-tools .tool-divider {
+    margin-right:auto
+  }
+  .workspace-layerbar {
+    padding:0 12px;
+    gap:5px
+  }
+  .layer-row {
+    padding:6px 8px;
+    gap:5px;
+    max-width:180px
+  }
+  .layer-name {
+    font-size:10px;
+    max-width:125px
+  }
+  .layer-index {
+    display:none
+  }
+  .layer-symbol {
+    font-size:12px
+  }
+  .add-actions {
+    gap:0
+  }
+  .add-actions button {
+    font-size:10px;
+    padding:5px
+  }
+  .workspace-footer {
+    padding:0 12px
+  }
+  .workspace-footer>span:last-child {
+    display:none
+  }
+  .artboard-caption {
+    gap:10px;
+    font-size:8px
+  }
+  .artboard-caption span {
+    font-size:8px!important
+  }
+  .dimension-line {
+    font-size:8px
+  }
+  .eyebrow {
+    font-size:8px;
+    letter-spacing:1px
+  }
+  .layout-notice {
+    font-size:10px;
+    line-height:1.5
+  }
+  .inspector {
+    border-radius:12px
+  }
+  .toast {
+    bottom:15px
+  }
+  dialog {
+    padding:22px
+  }
+  .note {
+    font-size:10px
+  }
+}
+@media(prefers-reduced-motion:reduce) {
+  *,*:before,*:after {
+    animation:none!important;
+    transition:none!important;
+    scroll-behavior:auto!important
+  }
+}
+
+.mobile-preview { display:none; }
+@media (max-width:850px) {
+  .mobile-preview { position:fixed; top:0; left:0; right:0; z-index:10; background:#fffffff5; backdrop-filter:blur(12px); border-bottom:1px solid var(--line); padding:12px 18px; display:flex; align-items:center; gap:16px; box-shadow:0 6px 20px #294a4610; }
+  .mobile-preview>div { flex:1; min-width:0; }
+  .mobile-preview .eyebrow { display:block; margin-bottom:7px; }
+  #mobileArtwork { display:block; width:100%; height:42px; overflow:hidden; }
+  .mobile-preview button { font-size:10px; white-space:nowrap; }
+  .inspector input,.inspector textarea,.inspector select { scroll-margin-top:115px; }
+}
+
+@media(max-width:1150px) { .wheel-hint { display:none; } }
