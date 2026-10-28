@@ -19,8 +19,9 @@ function blockMarkup(block,height,assets,interactive) {
         geometry=`<g transform="translate(0 ${y-block.fontSize/2}) scale(${block.fontSize/118})">${assets.logoPaths.map(d=>`<path d="${xml(d)}"/>`).join('')}</g>`;
     } else {
         const font=assets.fonts.get(block.fontKey);
-        const bounds=font.getPath(block.text,0,0,block.fontSize).getBoundingBox();
-        const path=font.getPath(block.text,0,y-(bounds.y1+bounds.y2)/2,block.fontSize).toPathData(2);
+        // Постоянная базовая линия: Д, Щ, Ё и нижние выносные элементы не двигают строку.
+        const lineCenter=(font.ascender+font.descender)*block.fontSize/(2*font.unitsPerEm);
+        const path=font.getPath(block.text,0,y+lineCenter,block.fontSize).toPathData(2);
         geometry=`<path d="${path}"/>`;
     }
     const interaction=interactive?` data-block-id="${block.id}" class="artwork-block" tabindex="0" role="button" aria-label="${xml(block.type==='logo'?'Логотип BETBOOM':block.text||'Пустой текст')}"`:'';

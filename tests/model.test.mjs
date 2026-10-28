@@ -59,3 +59,30 @@ test('extreme repetition is rejected instead of building an unbounded SVG',()=>{
 test('section candidates divide total length without remainder',()=>{
     const values=divisors(24960);assert.ok(values.includes(2496));assert.ok(values.every(n=>24960%n===0));
 });
+
+function firstGlyphY(text,fontKey='ony',offset=5) {
+    const p=newProject();p.blocks=[{...p.blocks[1],text,fontKey,verticalOffset:offset}];
+    const path=svgDocument(p,assets).match(/<path d="([^"]*)"/)[1];
+    return Number(/^M[-\d.]+ ([-\d.]+)/.exec(path)[1]);
+}
+test('adding descenders and accents does not move existing letters vertically',()=>{
+    for(const text of ['ННН','НННД','НННЩ','НННЁ','НННg','НННj']) {
+        assert.equal(firstGlyphY(text),firstGlyphY('ННН'),text);
+    }
+    for(const text of ['TEST','TESTg','TESTj','TESTÉ']) {
+        assert.equal(firstGlyphY(text),firstGlyphY('TEST'),text);
+    }
+});
+test('custom fonts use a stable baseline and retain explicit vertical offsets',()=>{
+    assets.fonts.set('custom-test',opentype.loadSync(new URL('../fonts/Gilroy-Black.otf',import.meta.url).pathname));
+    assert.equal(firstGlyphY('ННН','custom-test'),firstGlyphY('НННД','custom-test'));
+    assert.equal(firstGlyphY('ННН','custom-test'),firstGlyphY('НННЁ','custom-test'));
+    assert.ok(Math.abs(firstGlyphY('НННД','custom-test',14)-firstGlyphY('НННД','custom-test',5)-9)<0.01);
+    assets.fonts.delete('custom-test');
+});
+test('empty text exports finite geometry and does not alter later text placement',()=>{
+    const before=firstGlyphY('ННН');
+    const p=newProject();p.blocks=[{...p.blocks[1],text:''}];
+    assert.doesNotMatch(svgDocument(p,assets),/NaN|Infinity/);
+    assert.equal(firstGlyphY('НННД'),before);
+});

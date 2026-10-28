@@ -1,6 +1,6 @@
 import {newProject,makeBlock,uid,layout,sectionStats,divisors,LIMITS,xml} from './model.mjs';
 import {wheelScale} from './zoom.mjs';
-import {loadAssets,sectionMarkup,svgDocument} from './geometry.mjs';
+import {loadAssets,sectionMarkup,svgDocument} from './geometry.mjs?v=20261028-baseline';
 import {saveProject,readSavedProject,prepareFonts,importProject,uploadFont,download} from './project.mjs';
 
 const $=id=>document.getElementById(id);
